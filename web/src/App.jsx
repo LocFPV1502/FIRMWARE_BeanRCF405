@@ -282,12 +282,15 @@ function ArduPilotPage({ catalog }) {
       >
         ← Tất cả firmware
       </a>
-      <h1 className="mt-3 max-w-[18ch] text-balance text-[clamp(2.2rem,5vw,3.6rem)] leading-[0.95] font-semibold">
-        ArduPilot cho người mới
+      <h1 className="mt-4">
+        <img
+          src="/logos/ardupilot.png"
+          alt="ArduPilot"
+          width="96"
+          height="96"
+          className="size-24 rounded-2xl object-contain"
+        />
       </h1>
-      <p className="mt-4 max-w-[46ch] text-pretty text-[16px] text-muted">
-        Chọn loại máy bạn đang lắp. Sau đó chọn nạp lần đầu hoặc cập nhật. Nút tải chỉ mở khi đủ hai lựa chọn.
-      </p>
 
       {status === 'fallback' && (
         <p className="mt-4 text-[13px] text-accent" role="status">
