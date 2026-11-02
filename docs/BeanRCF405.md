@@ -102,7 +102,12 @@ Nạp lần đầu bằng hex có bootloader, qua SWD: `transport select swd`, `
 
 Trang tải nằm ở `web/`. Catalog đọc cây GitHub `LocFPV1502/FIRMWARE_BeanRCF405` nhánh `main`. Khi API lỗi, `web/src/catalog.js` dùng `FALLBACK_FILES`. File `-bl.apj` là cập nhật GCS. File `-bl.hex` là nạp lần đầu.
 
-Ảnh ArduPilot của BeanRC nằm ở `ardupilot_4.6.3/`. Board id trong file APJ phải là 1203. File Copter từng có trong thư mục này mang board id 1125 và đã được thay.
+Ảnh ArduPilot của BeanRC nằm ở `ardupilot_4.6.3/`.
+
+- Có bdshot: board id 1203, tên `*-bl.apj` và `*-bl.hex`.
+- Không bdshot: board id 1204, build `BeanRCF405-DShot`, tên `*-nobd-bl.apj` và `*-nobd-bl.hex`.
+
+Hai board id cố ý khác nhau. APJ chỉ cập nhật đúng bootloader cùng id. File Copter từng có trong thư mục này mang board id 1125 và đã được thay.
 
 ## Giá trị chưa đo lại trong lần ghi này
 

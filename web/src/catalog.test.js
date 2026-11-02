@@ -20,6 +20,9 @@ test('parses ArduPilot APJ and DFU hex', () => {
   assert.equal(hex.role, 'first_flash')
   assert.equal(hex.format, 'hex')
   assert.equal(hex.vehicle, 'copter')
+  assert.equal(apj.bdshot, true)
+  assert.equal(parseFirmwarePath('ardupilot_4.6.3/arduplane-nobd-bl.apj').bdshot, false)
+  assert.equal(parseFirmwarePath('ardupilot_4.6.3/ardurover-nobd-bl.hex').vehicle, 'rover')
   assert.equal(parseFirmwarePath('ardupilot_4.6.3/arduplane-bl.apj').vehicle, 'plane')
   assert.equal(parseFirmwarePath('ardupilot_4.6.3/ardurover-bl.hex').vehicle, 'rover')
 })
@@ -46,7 +49,7 @@ test('fallback catalog has three stacks', () => {
     stacks.map((s) => s.id),
     ['ardupilot', 'betaflight', 'inav'],
   )
-  assert.equal(stacks[0].files.length, 6)
+  assert.equal(stacks[0].files.length, 12)
 })
 
 test('formatBytes', () => {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
+  ARDUPILOT_BDSHOT,
   ARDUPILOT_KINDS,
   ARDUPILOT_VEHICLES,
   GITHUB_URL,
@@ -254,21 +255,33 @@ function ArduPilotPage({ catalog }) {
   const stack = stacks.find((item) => item.id === 'ardupilot')
   const files = stack?.files || []
   const [vehicle, setVehicle] = useState('')
+  const [bdshot, setBdshot] = useState('')
   const [kind, setKind] = useState('')
   const [picked, setPicked] = useState('')
   const [busy, setBusy] = useState(false)
   const [notice, setNotice] = useState('')
 
-  const forVehicle = files.filter((file) => file.vehicle === vehicle)
-  const kinds = ARDUPILOT_KINDS.filter((item) => forVehicle.some((file) => file.role === item.role))
-  const matches = forVehicle.filter((file) => file.role === kind)
+  const wantsBdshot = bdshot === 'yes'
+  const scoped = files.filter((item) => item.vehicle === vehicle && item.bdshot === wantsBdshot)
+  const kinds = bdshot
+    ? ARDUPILOT_KINDS.filter((item) => scoped.some((file) => file.role === item.role))
+    : []
+  const matches = scoped.filter((item) => item.role === kind)
   const file = matches.length === 1 ? matches[0] : matches.find((item) => item.path === picked) || null
 
   function pickVehicle(id) {
     setVehicle(id)
     setPicked('')
     setNotice('')
-    const next = files.filter((item) => item.vehicle === id)
+    const next = files.filter((item) => item.vehicle === id && item.bdshot === wantsBdshot)
+    if (bdshot && kind && !next.some((item) => item.role === kind)) setKind('')
+  }
+
+  function pickBdshot(id) {
+    setBdshot(id)
+    setPicked('')
+    setNotice('')
+    const next = files.filter((item) => item.vehicle === vehicle && item.bdshot === (id === 'yes'))
     if (kind && !next.some((item) => item.role === kind)) setKind('')
   }
 
@@ -316,10 +329,30 @@ function ArduPilotPage({ catalog }) {
         </div>
       </section>
 
-      <section className="mt-8" aria-label="Loại firmware">
-        <p className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">2 · Loại firmware</p>
+      <section className="mt-8" aria-label="Bdshot">
+        <p className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">2 · Bdshot</p>
         {!vehicle && <p className="mt-3 text-[14px] text-muted">Chọn loại thiết bị trước.</p>}
-        {vehicle && kinds.length === 0 && status !== 'loading' && (
+        {vehicle && (
+          <div role="radiogroup" aria-label="Bdshot" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {ARDUPILOT_BDSHOT.map((item) => (
+              <Choice
+                key={item.id}
+                active={bdshot === item.id}
+                title={item.name}
+                detail={item.detail}
+                testId={`bdshot-${item.id}`}
+                onClick={() => pickBdshot(item.id)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="mt-8" aria-label="Loại firmware">
+        <p className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">3 · Loại firmware</p>
+        {!vehicle && <p className="mt-3 text-[14px] text-muted">Chọn loại thiết bị trước.</p>}
+        {vehicle && !bdshot && <p className="mt-3 text-[14px] text-muted">Chọn có bdshot hay không trước.</p>}
+        {vehicle && bdshot && kinds.length === 0 && status !== 'loading' && (
           <p className="mt-3 text-[14px] text-muted">Chưa có firmware cho loại máy này.</p>
         )}
         {vehicle && kinds.length > 0 && (
@@ -360,7 +393,7 @@ function ArduPilotPage({ catalog }) {
       </section>
 
       <section className="mt-8">
-        <p className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">3 · Tải về</p>
+        <p className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">4 · Tải về</p>
         <button
           type="button"
           data-testid="download"
@@ -377,7 +410,7 @@ function ArduPilotPage({ catalog }) {
             {` · ${roleLabel(file.role)}`}
           </p>
         )}
-        {vehicle && kind && matches.length === 0 && status !== 'loading' && (
+        {vehicle && bdshot && kind && matches.length === 0 && status !== 'loading' && (
           <p className="mt-3 text-[14px] text-muted" role="status">
             Không có file cho lựa chọn này.
           </p>

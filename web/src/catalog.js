@@ -38,6 +38,12 @@ export const FALLBACK_FILES = [
   { path: 'ardupilot_4.6.3/arduplane-bl.hex', size: 2810964 },
   { path: 'ardupilot_4.6.3/ardurover-bl.apj', size: 771891 },
   { path: 'ardupilot_4.6.3/ardurover-bl.hex', size: 2433060 },
+  { path: 'ardupilot_4.6.3/arducopter-nobd-bl.apj', size: 840092 },
+  { path: 'ardupilot_4.6.3/arducopter-nobd-bl.hex', size: 2672100 },
+  { path: 'ardupilot_4.6.3/arduplane-nobd-bl.apj', size: 885124 },
+  { path: 'ardupilot_4.6.3/arduplane-nobd-bl.hex', size: 2799436 },
+  { path: 'ardupilot_4.6.3/ardurover-nobd-bl.apj', size: 767305 },
+  { path: 'ardupilot_4.6.3/ardurover-nobd-bl.hex', size: 2420888 },
   { path: 'betaflight_2026.6.0-alpha_STM32F405_BEANRCF405.hex', size: 1547397 },
   { path: 'inav_9.1.0_BEANRCF405.hex', size: 1759275 },
 ]
@@ -74,13 +80,16 @@ export function parseFirmwarePath(path, size = 0) {
   }
 
   let vehicle = ''
+  let bdshot = false
   if (stack === 'ardupilot') {
-    if (name.toLowerCase().includes('copter')) vehicle = 'copter'
-    else if (name.toLowerCase().includes('plane')) vehicle = 'plane'
-    else if (name.toLowerCase().includes('rover')) vehicle = 'rover'
+    const lower = name.toLowerCase()
+    if (lower.includes('copter')) vehicle = 'copter'
+    else if (lower.includes('plane')) vehicle = 'plane'
+    else if (lower.includes('rover')) vehicle = 'rover'
+    bdshot = !lower.includes('nobd')
   }
 
-  return { path, name, stack, version, role, format, size, vehicle }
+  return { path, name, stack, version, role, format, size, vehicle, bdshot }
 }
 
 export const ARDUPILOT_VEHICLES = [
@@ -98,6 +107,19 @@ export const ARDUPILOT_VEHICLES = [
     id: 'rover',
     name: 'Rover',
     detail: 'Xe mặt đất hoặc thuyền.',
+  },
+]
+
+export const ARDUPILOT_BDSHOT = [
+  {
+    id: 'yes',
+    name: 'Có bdshot',
+    detail: 'ESC trả telemetry qua DShot hai chiều.',
+  },
+  {
+    id: 'no',
+    name: 'Không bdshot',
+    detail: 'Chỉ DShot một chiều. ESC không trả telemetry.',
   },
 ]
 

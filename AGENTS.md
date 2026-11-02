@@ -8,9 +8,16 @@ Trả lời người dùng bằng tiếng Việt. Không nạp firmware trừ kh
 
 BeanRC chỉ build từ ArduPilot tại `/home/loc_nguyen/ardupilot_qicktune`, nhánh `copter-4.6.3-fft`, target `libraries/AP_HAL_ChibiOS/hwdef/BeanRCF405/`.
 
-BETAF405 là mạch khác. Cây Betaflight và cây INAV không phải tài liệu của mạch này. Không đọc target của chúng để sửa pin, DMA, board id, thang pin, hay hướng IMU của BeanRC. Không đổi `APJ_BOARD_ID` 1203 cho trùng một board F405 khác. Ảnh có board id khác 1203 không phải firmware BeanRC.
+BETAF405 là mạch khác. Cây Betaflight và cây INAV không phải tài liệu của mạch này. Không đọc target của chúng để sửa pin, DMA, board id, thang pin, hay hướng IMU của BeanRC.
 
-Firmware ArduPilot để trong `ardupilot_4.6.3/`, hậu tố `-bl` sau tên: `arducopter-bl.apj` và `arducopter-bl.hex`, cùng kiểu cho Plane và Rover. File `.apj` để cập nhật qua Mission Planner. File `.hex` để nạp lần đầu. Sửa kích thước tương ứng trong `web/src/catalog.js` (`FALLBACK_FILES`). Không commit, không push, trừ khi được yêu cầu.
+Hai ảnh ArduPilot của cùng mạch BeanRC:
+
+- `BeanRCF405`, board id 1203, có bidirectional DShot. File `arducopter-bl.apj` và `arducopter-bl.hex`, cùng kiểu cho Plane và Rover.
+- `BeanRCF405-DShot`, board id 1204, chỉ DShot một chiều. File `arducopter-nobd-bl.apj` và `arducopter-nobd-bl.hex`, cùng kiểu cho Plane và Rover.
+
+Không đổi 1204 thành 1203. Bootloader chỉ nhận APJ đúng board id của nó. Đổi giữa có bdshot và không bdshot thì nạp file HEX lần đầu, không nạp chéo bằng APJ.
+
+File `.apj` để cập nhật qua Mission Planner. File `.hex` để nạp lần đầu. Sửa kích thước tương ứng trong `web/src/catalog.js` (`FALLBACK_FILES`). Không commit, không push, trừ khi được yêu cầu.
 
 ## Build ArduPilot
 
