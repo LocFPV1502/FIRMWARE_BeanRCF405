@@ -73,8 +73,46 @@ export function parseFirmwarePath(path, size = 0) {
     role = 'first_flash'
   }
 
-  return { path, name, stack, version, role, format, size }
+  let vehicle = ''
+  if (stack === 'ardupilot') {
+    if (name.toLowerCase().includes('copter')) vehicle = 'copter'
+    else if (name.toLowerCase().includes('plane')) vehicle = 'plane'
+    else if (name.toLowerCase().includes('rover')) vehicle = 'rover'
+  }
+
+  return { path, name, stack, version, role, format, size, vehicle }
 }
+
+export const ARDUPILOT_VEHICLES = [
+  {
+    id: 'copter',
+    name: 'Copter',
+    detail: 'Máy bay nhiều cánh quạt: quad, hex, octa.',
+  },
+  {
+    id: 'plane',
+    name: 'Plane',
+    detail: 'Máy bay cánh cố định hoặc tàu lượn.',
+  },
+  {
+    id: 'rover',
+    name: 'Rover',
+    detail: 'Xe mặt đất hoặc thuyền.',
+  },
+]
+
+export const ARDUPILOT_KINDS = [
+  {
+    role: 'first_flash',
+    name: 'Nạp lần đầu',
+    detail: 'Mạch chưa chạy ArduPilot. File HEX, nạp bằng DFU.',
+  },
+  {
+    role: 'gcs_update',
+    name: 'Cập nhật',
+    detail: 'Đã có ArduPilot. File APJ, nạp trong Mission Planner.',
+  },
+]
 
 export function groupByStack(files) {
   return STACKS.map((stack) => {

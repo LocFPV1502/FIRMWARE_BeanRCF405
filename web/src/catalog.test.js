@@ -13,11 +13,15 @@ test('parses ArduPilot APJ and DFU hex', () => {
   assert.equal(apj.version, '4.6.3')
   assert.equal(apj.role, 'gcs_update')
   assert.equal(apj.format, 'apj')
+  assert.equal(apj.vehicle, 'copter')
 
   const hex = parseFirmwarePath('ardupilot_4.6.3/arducopter-bl.hex', 2787536)
   assert.equal(hex.stack, 'ardupilot')
   assert.equal(hex.role, 'first_flash')
   assert.equal(hex.format, 'hex')
+  assert.equal(hex.vehicle, 'copter')
+  assert.equal(parseFirmwarePath('ardupilot_4.6.3/arduplane-bl.apj').vehicle, 'plane')
+  assert.equal(parseFirmwarePath('ardupilot_4.6.3/ardurover-bl.hex').vehicle, 'rover')
 })
 
 test('parses Betaflight and INAV root hex files', () => {
