@@ -9,7 +9,7 @@ export const STACKS = [
     id: 'ardupilot',
     name: 'ArduPilot',
     logo: '/logos/ardupilot.png',
-    tagline: 'Copter · GCS',
+    tagline: 'Copter · Plane · Rover',
     hint: 'HEX flash DFU lần đầu. APJ cập nhật trong Mission Planner.',
   },
   {
@@ -32,8 +32,12 @@ const FIRMWARE_EXT = /\.(hex|apj|bin)$/i
 const VERSION_RE = /(\d+\.\d+(?:\.\d+)?(?:-[A-Za-z0-9.]+)?)/
 
 export const FALLBACK_FILES = [
-  { path: 'ardupilot_4.6.3/arducopter.apj', size: 877028 },
-  { path: 'ardupilot_4.6.3/arducopter_with_bl.hex', size: 2787536 },
+  { path: 'ardupilot_4.6.3/arducopter-bl.apj', size: 843710 },
+  { path: 'ardupilot_4.6.3/arducopter-bl.hex', size: 2684156 },
+  { path: 'ardupilot_4.6.3/arduplane-bl.apj', size: 889522 },
+  { path: 'ardupilot_4.6.3/arduplane-bl.hex', size: 2810964 },
+  { path: 'ardupilot_4.6.3/ardurover-bl.apj', size: 771891 },
+  { path: 'ardupilot_4.6.3/ardurover-bl.hex', size: 2433060 },
   { path: 'betaflight_2026.6.0-alpha_STM32F405_BEANRCF405.hex', size: 1547397 },
   { path: 'inav_9.1.0_BEANRCF405.hex', size: 1759275 },
 ]
@@ -65,7 +69,7 @@ export function parseFirmwarePath(path, size = 0) {
     format = 'apj'
   } else if (/\.bin$/i.test(name)) {
     format = 'bin'
-  } else if (/with_bl/i.test(name)) {
+  } else if (/with_bl|-bl\.hex$/i.test(name)) {
     role = 'first_flash'
   }
 

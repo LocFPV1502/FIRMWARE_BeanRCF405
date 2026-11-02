@@ -8,13 +8,13 @@ import {
 } from './catalog.js'
 
 test('parses ArduPilot APJ and DFU hex', () => {
-  const apj = parseFirmwarePath('ardupilot_4.6.3/arducopter.apj', 877028)
+  const apj = parseFirmwarePath('ardupilot_4.6.3/arducopter-bl.apj', 877028)
   assert.equal(apj.stack, 'ardupilot')
   assert.equal(apj.version, '4.6.3')
   assert.equal(apj.role, 'gcs_update')
   assert.equal(apj.format, 'apj')
 
-  const hex = parseFirmwarePath('ardupilot_4.6.3/arducopter_with_bl.hex', 2787536)
+  const hex = parseFirmwarePath('ardupilot_4.6.3/arducopter-bl.hex', 2787536)
   assert.equal(hex.stack, 'ardupilot')
   assert.equal(hex.role, 'first_flash')
   assert.equal(hex.format, 'hex')
@@ -42,7 +42,7 @@ test('fallback catalog has three stacks', () => {
     stacks.map((s) => s.id),
     ['ardupilot', 'betaflight', 'inav'],
   )
-  assert.equal(stacks[0].files.length, 2)
+  assert.equal(stacks[0].files.length, 6)
 })
 
 test('formatBytes', () => {
