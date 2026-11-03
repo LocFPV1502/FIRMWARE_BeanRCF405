@@ -126,9 +126,9 @@ Giữ như đang ghi trong hwdef BeanRC. Không đổi nếu chưa có phép đo
 | Ảnh | Flash đã dùng | Flash còn | File trong repo |
 | --- | --- | --- | --- |
 | ArduCopter V4.6.3-qwik | 926751 | 72612 | `arducopter-bl.apj` 843710 byte, `arducopter-bl.hex` 2684156 byte |
-| ArduPlane V4.6.3 | 972903 | 26508 | `arduplane-bl.apj` 889522 byte, `arduplane-bl.hex` 2810964 byte |
+| ArduPlane V4.6.3 | 973615 | 25809 | `arduplane-bl.apj` 890578 byte, `arduplane-bl.hex` 2812916 byte |
 | ArduRover V4.6.3 | 835495 | 163916 | `ardurover-bl.apj` 771891 byte, `ardurover-bl.hex` 2433060 byte |
 
-Plane còn khoảng 26 KB. Lần build sau nếu link tràn thì tắt feature trong hwdef BeanRC, không bỏ IMU, timer motor, hoặc OSD.
+Plane bản bdshot được build lại ngày 2026-11-03, cùng git `92b0cd78`. Flash đã dùng là text + data. Ảnh một chiều `BeanRCF405-DShot` cùng ngày dùng 968711 byte, còn 30713 byte. File `arduplane-nobd-bl.apj` vẫn 885124 byte và `arduplane-nobd-bl.hex` vẫn 2799436 byte. Plane còn khoảng 25 KB. Lần build sau nếu link tràn thì tắt feature trong hwdef BeanRC, không bỏ IMU, timer motor, hoặc OSD.
 
 Cây này không bật `AP_CHECK_FIRMWARE_ENABLED`, nên waf in `No APP_DESCRIPTOR found`. Đó là cấu hình mặc định của bản 4.6.3 khi không truyền `--enable-check-firmware`, không phải lỗi link. Chưa nạp lên mạch.

@@ -34,8 +34,8 @@ const VERSION_RE = /(\d+\.\d+(?:\.\d+)?(?:-[A-Za-z0-9.]+)?)/
 export const FALLBACK_FILES = [
   { path: 'ardupilot_4.6.3/arducopter-bl.apj', size: 843710 },
   { path: 'ardupilot_4.6.3/arducopter-bl.hex', size: 2684156 },
-  { path: 'ardupilot_4.6.3/arduplane-bl.apj', size: 889522 },
-  { path: 'ardupilot_4.6.3/arduplane-bl.hex', size: 2810964 },
+  { path: 'ardupilot_4.6.3/arduplane-bl.apj', size: 890578 },
+  { path: 'ardupilot_4.6.3/arduplane-bl.hex', size: 2812916 },
   { path: 'ardupilot_4.6.3/ardurover-bl.apj', size: 771891 },
   { path: 'ardupilot_4.6.3/ardurover-bl.hex', size: 2433060 },
   { path: 'ardupilot_4.6.3/arducopter-nobd-bl.apj', size: 840092 },
